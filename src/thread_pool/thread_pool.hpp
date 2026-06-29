@@ -2,7 +2,8 @@
 
 namespace dispatcher::thread_pool {
 
-class ThreadPool {
+class ThreadPool
+{
   // здесь ваш код
 };
 

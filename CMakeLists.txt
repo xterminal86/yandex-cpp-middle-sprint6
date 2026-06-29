@@ -10,17 +10,19 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_package(GTest REQUIRED)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/src/queue
+  ${CMAKE_SOURCE_DIR}/src/thread_pool
 )
 
 # set(target dispatcher)
-
+#
 # add_executable(${target} main.cpp)
 # target_include_directories(${target} PUBLIC
 #     ${CMAKE_CURRENT_SOURCE_DIR}/include
 # )
-
-# target_link_libraries(${target} 
+#
+# target_link_libraries(${target}
 #     PRIVATE
 #         task_dispatcher
 # )

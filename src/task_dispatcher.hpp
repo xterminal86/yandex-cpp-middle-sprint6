@@ -8,9 +8,10 @@
 
 namespace dispatcher {
 
-class TaskDispatcher {
+class TaskDispatcher
+{
     // здесь ваш код
-public:
+  public:
     // TaskDispatcher(size_t thread_count, ?);
 
     void schedule(TaskPriority priority, std::function<void()> task);

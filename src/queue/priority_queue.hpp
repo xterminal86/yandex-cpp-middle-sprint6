@@ -14,9 +14,10 @@
 
 namespace dispatcher::queue {
 
-class PriorityQueue {
+class PriorityQueue
+{
     // здесь ваш код
-public:
+  public:
     // explicit PriorityQueue(?);
 
     void push(TaskPriority priority, std::function<void()> task);

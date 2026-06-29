@@ -3,9 +3,10 @@
 
 namespace dispatcher::queue {
 
-class UnboundedQueue : public IQueue {
+class UnboundedQueue : public IQueue
+{
     // здесь ваш код
-public:
+  public:
     explicit UnboundedQueue(int capacity);
 
     void push(std::function<void()> task) override;
