@@ -1,5 +1,6 @@
 #pragma once
-#include "queue/queue.hpp"
+#include "queue.hpp"
+#include "types.hpp"
 
 #include <mutex>
 #include <queue>
@@ -9,13 +10,15 @@ namespace dispatcher::queue {
 class UnboundedQueue : public IQueue
 {
   public:
-    using Action = std::function<void()>;
-
     UnboundedQueue() = default;
 
     void push(Action task) override;
 
     std::optional<Action> try_pop() override;
+
+    size_t size();
+
+    bool empty();
 
   private:
     std::queue<Action> _queue;

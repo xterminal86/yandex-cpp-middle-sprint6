@@ -15,7 +15,7 @@ void UnboundedQueue::push(std::function<void()> task)
 
 // =============================================================================
 
-std::optional<UnboundedQueue::Action> UnboundedQueue::try_pop()
+std::optional<Action> UnboundedQueue::try_pop()
 {
   std::lock_guard lock(_mutex);
   if (_queue.empty())
@@ -27,6 +27,22 @@ std::optional<UnboundedQueue::Action> UnboundedQueue::try_pop()
   _queue.pop();
 
   return action;
+}
+
+// =============================================================================
+
+size_t UnboundedQueue::size()
+{
+  std::lock_guard lock(_mutex);
+  return _queue.size();
+}
+
+// =============================================================================
+
+bool UnboundedQueue::empty()
+{
+  std::lock_guard lock(_mutex);
+  return _queue.empty();
 }
 
 } // namespace dispatcher::queue
