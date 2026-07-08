@@ -1,20 +1,29 @@
 #pragma once
 #include "queue/queue.hpp"
+#include "types.hpp"
 
 #include <queue>
+#include <mutex>
+#include <condition_variable>
 
 namespace dispatcher::queue {
 
 class BoundedQueue : public IQueue
 {
   public:
-    explicit BoundedQueue(int capacity);
+    explicit BoundedQueue(size_t capacity);
 
-    void push(std::function<void()> task) override;
+    void push(Action task) override;
 
-    std::optional<std::function<void()>> try_pop() override;
+    std::optional<Action> try_pop() override;
 
-    ~BoundedQueue() override;
+  private:
+    std::queue<Action> _queue;
+    std::mutex _mutex;
+    std::condition_variable _blockIfFull;
+    std::condition_variable _blockIfEmpty;
+
+    size_t _capacity;
 };
 
 }  // namespace dispatcher::queue

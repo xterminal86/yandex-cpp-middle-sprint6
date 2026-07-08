@@ -18,16 +18,16 @@ class PriorityQueue
 {
     // здесь ваш код
   public:
-    // explicit PriorityQueue(?);
+    explicit PriorityQueue(/*const std::unordered_map<TaskPriority*/);
+    ~PriorityQueue();
 
-    void push(TaskPriority priority, std::function<void()> task);
+    void push(TaskPriority priority, Action task);
+
     // block on pop until shutdown is called
     // after that return std::nullopt on empty queue
-    std::optional<std::function<void()>> pop();
+    std::optional<Action> pop();
 
     void shutdown();
-
-    ~PriorityQueue();
 };
 
 }  // namespace dispatcher::queue

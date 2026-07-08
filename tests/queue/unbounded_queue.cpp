@@ -136,7 +136,7 @@ TEST(UnboundedQueue, Test10Producers3Conusmer)
           //
           // Assume we're done (+/- 3 consumers waiting for 1 second).
           //
-          if (emptyCounter == 30)
+          if (emptyCounter >= 30)
           {
             break;
           }

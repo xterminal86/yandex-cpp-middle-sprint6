@@ -14,7 +14,7 @@ class TaskDispatcher
   public:
     // TaskDispatcher(size_t thread_count, ?);
 
-    void schedule(TaskPriority priority, std::function<void()> task);
+    void schedule(TaskPriority priority, Action task);
     ~TaskDispatcher();
 };
 
