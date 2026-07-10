@@ -10,15 +10,17 @@
 #include <mutex>
 #include <optional>
 #include <stdexcept>
-#include <unordered_map>
+#include <map>
+#include <format>
+#include <print>
+#include <condition_variable>
 
 namespace dispatcher::queue {
 
 class PriorityQueue
 {
-    // здесь ваш код
   public:
-    explicit PriorityQueue(/*const std::unordered_map<TaskPriority*/);
+    explicit PriorityQueue(const std::map<TaskPriority, QueueOptions>& config);
     ~PriorityQueue();
 
     void push(TaskPriority priority, Action task);
@@ -28,6 +30,16 @@ class PriorityQueue
     std::optional<Action> pop();
 
     void shutdown();
+
+  private:
+
+    std::map<TaskPriority, QueueOptions> _config;
+
+    using QueueMap = std::map<TaskPriority, std::unique_ptr<IQueue>>;
+    QueueMap _queueMap;
+
+    std::mutex _mutex;
+    std::condition_variable _popBlocker;
 };
 
 }  // namespace dispatcher::queue

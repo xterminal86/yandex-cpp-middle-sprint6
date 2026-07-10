@@ -1,4 +1,6 @@
 #pragma once
+#include "types.hpp"
+
 #include <functional>
 #include <optional>
 
@@ -14,8 +16,8 @@ class IQueue
 {
   public:
     virtual ~IQueue() = default;
-    virtual void push(std::function<void()> task) = 0;
-    virtual std::optional<std::function<void()>> try_pop() = 0;
+    virtual void push(Action task) = 0;
+    virtual std::optional<Action> try_pop() = 0;
 };
 
 }  // namespace dispatcher::queue

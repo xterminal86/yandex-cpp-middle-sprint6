@@ -3,6 +3,7 @@ set(target dispatcher_test)
 add_executable(
   ${target}
   task_dispatcher.cpp
+  ${CMAKE_SOURCE_DIR}/src/queue/priority_queue.cpp
 )
 
 target_link_libraries(
