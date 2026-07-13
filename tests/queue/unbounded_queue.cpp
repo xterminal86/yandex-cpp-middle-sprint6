@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <thread>
-#include <print>
 #include <atomic>
 
 #include "queue/unbounded_queue.hpp"
+#include "logger.hpp"
 
 using namespace dispatcher;
 using namespace dispatcher::queue;
@@ -20,7 +20,7 @@ TEST(UnboundedQueue, Test100Producers1Conusmer)
         q.push(
           [&q, index]()
           {
-            std::println("Task {}", index);
+            Logger::Get().Log(std::format("Task {}", index));
           }
         );
       }
@@ -61,7 +61,7 @@ TEST(UnboundedQueue, Test100Producers1Conusmer)
         {
           if (IsActionEmpty(*res))
           {
-            std::println("Sentinel value hit - exiting");
+            Logger::Get().Log("Sentinel value hit - exiting");
             break;
           }
           else
@@ -97,7 +97,9 @@ TEST(UnboundedQueue, Test10Producers3Conusmer)
           {
             for (size_t i = 0; i < 10; i++)
             {
-              std::println("Task {:02d}, some data {}", index, i);
+              Logger::Get().Log(
+                std::format("Task {:02d}, some data {}", index, i)
+              );
               std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
           }
@@ -148,7 +150,7 @@ TEST(UnboundedQueue, Test10Producers3Conusmer)
           }
           else
           {
-            std::println("empty");
+            Logger::Get().Log("empty");
             emptyCounter++;
             std::this_thread::sleep_for(std::chrono::seconds(1));
           }

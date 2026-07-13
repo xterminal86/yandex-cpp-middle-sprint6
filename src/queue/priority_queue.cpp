@@ -46,6 +46,17 @@ std::optional<Action> PriorityQueue::pop()
 {
   std::unique_lock lock(_mutex);
 
+  // ?
+  /*
+  _popBlocker.wait(
+    lock,
+    [this]()
+    {
+      return (_shutdown.load() == false);
+    }
+  );
+  */
+
   //Logger::Get().Log("  PriorityQueue::Pop()");
 
   std::optional<Action> res;

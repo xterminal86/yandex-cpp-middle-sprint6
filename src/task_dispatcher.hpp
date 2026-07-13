@@ -17,7 +17,7 @@ class TaskDispatcher
     TaskDispatcher(size_t thread_count);
     ~TaskDispatcher();
 
-    void schedule(TaskPriority priority, Action task);
+    bool schedule(TaskPriority priority, Action task);
 
   private:
     std::shared_ptr<PriorityQueue> _priorityQueue;

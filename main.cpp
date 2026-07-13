@@ -15,14 +15,14 @@ int main() {
   std::vector<std::jthread> threads;
 
   constexpr size_t ThreadsCount = 5;
-  constexpr size_t ScheduledShit = 10;
+  constexpr size_t ScheduledCount = 10;
 
   for (int i = 0; i < ThreadsCount; ++i)
   {
     threads.emplace_back(
       [&, i]()
       {
-        for (int j = 0; j < ScheduledShit; j++)
+        for (int j = 0; j < ScheduledCount; j++)
         {
           td.schedule(
             TaskPriority::Normal,

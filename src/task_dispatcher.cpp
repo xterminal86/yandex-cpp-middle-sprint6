@@ -26,9 +26,28 @@ TaskDispatcher::~TaskDispatcher()
 
 // =============================================================================
 
-void TaskDispatcher::schedule(TaskPriority priority, Action task)
+bool TaskDispatcher::schedule(TaskPriority priority, Action task)
 {
-  _priorityQueue->push(priority, task);
+  switch (priority)
+  {
+    case TaskPriority::Normal:
+    case TaskPriority::High:
+    {
+      _priorityQueue->push(priority, task);
+    }
+    break;
+
+    default:
+    {
+      Logger::Get().Log(
+        std::format("Unexpected task priority {}", (int)priority)
+      );
+      return false;
+    }
+    break;
+  }
+
+  return true;
 }
 
 } // namespace dispatcher

@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 #include <thread>
-#include <print>
+#include <format>
 
 #include "queue/bounded_queue.hpp"
+#include "logger.hpp"
 
 using namespace dispatcher;
 using namespace dispatcher::queue;
@@ -19,7 +20,7 @@ TEST(BoundedQueue, Test10Producers1Conusmer)
         q.push(
           [&q, index]()
           {
-            std::println("Task {}", index);
+            Logger::Get().Log(std::format("Task {}", index));
           }
         );
       }
