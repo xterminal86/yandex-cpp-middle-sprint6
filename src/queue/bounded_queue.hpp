@@ -17,6 +17,8 @@ class BoundedQueue : public IQueue
 
     std::optional<Action> try_pop() override;
 
+    void ForceNotify() override;
+
   private:
     std::queue<Action> _queue;
     std::mutex _mutex;

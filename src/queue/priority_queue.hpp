@@ -14,6 +14,7 @@
 #include <format>
 #include <print>
 #include <condition_variable>
+#include <thread>
 
 namespace dispatcher::queue {
 
@@ -21,7 +22,7 @@ class PriorityQueue
 {
   public:
     explicit PriorityQueue(const std::map<TaskPriority, QueueOptions>& config);
-    ~PriorityQueue();
+    ~PriorityQueue() = default;
 
     void push(TaskPriority priority, Action task);
 

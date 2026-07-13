@@ -18,17 +18,20 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/src/thread_pool
 )
 
-# set(target dispatcher)
-#
-# add_executable(${target} main.cpp)
-# target_include_directories(${target} PUBLIC
-#     ${CMAKE_CURRENT_SOURCE_DIR}/include
-# )
-#
-# target_link_libraries(${target}
-#     PRIVATE
-#         task_dispatcher
-# )
+set(target dispatcher)
+
+add_executable(${target} main.cpp)
+target_include_directories(
+  ${target}
+  PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(
+  ${target}
+  PRIVATE
+  task_dispatcher
+)
 
 include(CTest)
 enable_testing()

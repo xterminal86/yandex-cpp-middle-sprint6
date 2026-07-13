@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <optional>
+#include <atomic>
 
 namespace dispatcher::queue {
 
@@ -18,6 +19,18 @@ class IQueue
     virtual ~IQueue() = default;
     virtual void push(Action task) = 0;
     virtual std::optional<Action> try_pop() = 0;
+
+    void stop()
+    {
+      _enabled = false;
+    }
+
+    virtual void ForceNotify()
+    {
+    }
+
+  protected:
+    std::atomic<bool> _enabled = true;
 };
 
 }  // namespace dispatcher::queue

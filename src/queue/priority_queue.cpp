@@ -1,4 +1,5 @@
 #include "queue/priority_queue.hpp"
+#include "logger.hpp"
 
 namespace dispatcher::queue {
 
@@ -45,30 +46,49 @@ std::optional<Action> PriorityQueue::pop()
 {
   std::unique_lock lock(_mutex);
 
-  _popBlocker.wait(
-    lock,
-    [this]()
-    {
-      return (_shutdown.load() == true)
-          or (not _queueMap[TaskPriority::High].empty()
-           or not _queueMap[TaskPriority::Normal].empty());
-    }
-  );
+  //Logger::Get().Log("  PriorityQueue::Pop()");
 
-  return std::nullopt;
+  std::optional<Action> res;
+
+  res = _queueMap[TaskPriority::High]->try_pop();
+
+  if (not res)
+  {
+    //Logger::Get().Log("  nothing in High, checking Normal...");
+    res = _queueMap[TaskPriority::Normal]->try_pop();
+    /*
+    if (not res)
+    {
+      Logger::Get().Log("  still nothing");
+    }
+    */
+  }
+
+  return res;
 }
 
 // =============================================================================
 
 void PriorityQueue::push(TaskPriority priority, Action task)
 {
+  //Logger::Get().Log("  PriorityQueue::Push()");
+  _queueMap[priority]->push(task);
 }
 
 // =============================================================================
 
 void PriorityQueue::shutdown()
 {
+  //Logger::Get().Log("  PriorityQueue::Shutdown()");
+
   _shutdown = true;
+
+  for (auto& kvp : _queueMap)
+  {
+    //Logger::Get().Log(std::format("  {} - stop", (int)kvp.first));
+    kvp.second->stop();
+    kvp.second->ForceNotify();
+  }
 }
 
 } // namespace dispatcher::queue

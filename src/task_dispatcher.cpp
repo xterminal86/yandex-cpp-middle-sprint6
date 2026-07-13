@@ -1,4 +1,5 @@
 #include "task_dispatcher.hpp"
+#include "logger.hpp"
 
 namespace dispatcher {
 
@@ -13,6 +14,14 @@ TaskDispatcher::TaskDispatcher(size_t threads)
   );
 
   _threadPool = std::make_unique<ThreadPool>(_priorityQueue, threads);
+}
+
+// =============================================================================
+
+TaskDispatcher::~TaskDispatcher()
+{
+  _threadPool->stop();
+  //Logger::Get().Log("~TaskDispatcher()");
 }
 
 // =============================================================================

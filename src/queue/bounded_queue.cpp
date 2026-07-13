@@ -1,4 +1,5 @@
 #include "queue/bounded_queue.hpp"
+#include "logger.hpp"
 
 namespace dispatcher::queue {
 
@@ -10,6 +11,8 @@ BoundedQueue::BoundedQueue(size_t capacity)
 void BoundedQueue::push(Action task)
 {
   std::unique_lock lock(_mutex);
+
+  //Logger::Get().Log("    BoundedQueue::Push()");
 
   //
   // Equivalent to:
@@ -24,9 +27,15 @@ void BoundedQueue::push(Action task)
     lock,
     [this]()
     {
-      return _queue.size() < _capacity;
+      return (_queue.size() < _capacity) or not _enabled;
     }
   );
+
+  if (not _enabled)
+  {
+    _blockIfEmpty.notify_all();
+    return;
+  }
 
   _queue.push(std::move(task));
 
@@ -39,13 +48,23 @@ std::optional<Action> BoundedQueue::try_pop()
 {
   std::unique_lock lock(_mutex);
 
+  //Logger::Get().Log("    BoundedQueue::TryPop()");
+
   _blockIfEmpty.wait(
     lock,
     [this]()
     {
-      return not _queue.empty();
+      return not _queue.empty() or not _enabled;
     }
   );
+
+  /*
+  if (not _enabled)
+  {
+    _blockIfFull.notify_all();
+    return std::nullopt;
+  }
+  */
 
   if (_queue.empty())
   {
@@ -59,6 +78,14 @@ std::optional<Action> BoundedQueue::try_pop()
   _blockIfFull.notify_one();
 
   return result;
+}
+
+// =============================================================================
+
+void BoundedQueue::ForceNotify()
+{
+  _blockIfEmpty.notify_all();
+  _blockIfFull.notify_all();
 }
 
 } // namespace dispatcher::queue
