@@ -3,8 +3,9 @@
 namespace dispatcher::thread_pool
 {
 
-ThreadPool::ThreadPool(std::shared_ptr<PriorityQueue> q, size_t threadsNum)
-  : _queue(q), _threadsNum(threadsNum)
+ThreadPool::ThreadPool(
+  std::shared_ptr<PriorityQueue> queueRef, size_t threadsNum
+) : _queueRef(queueRef), _threadsNum(threadsNum)
 {
   Start();
 }
@@ -15,11 +16,11 @@ ThreadPool::~ThreadPool()
 {
   std::println("~ThreadPool()");
 
-  _queue->shutdown();
+  _queueRef->shutdown();
 
   while(true)
   {
-    std::optional<Action> action = _queue->pop();
+    std::optional<Action> action = _queueRef->pop();
     if (not action.has_value())
     {
       std::println("No tasks left, fucking off.");

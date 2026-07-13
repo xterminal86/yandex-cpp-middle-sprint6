@@ -7,6 +7,7 @@
 #include "types.hpp"
 
 using namespace dispatcher::queue;
+using namespace dispatcher::thread_pool;
 
 namespace dispatcher {
 
@@ -14,12 +15,13 @@ class TaskDispatcher
 {
   public:
     TaskDispatcher(size_t thread_count);
-
-    void schedule(TaskPriority priority, Action task);
     ~TaskDispatcher();
 
+    void schedule(TaskPriority priority, Action task);
+
   private:
-    std::unique_ptr<PriorityQueue> _priorityQueue;
+    std::shared_ptr<PriorityQueue> _priorityQueue;
+    std::unique_ptr<ThreadPool> _threadPool;
 };
 
 }  // namespace dispatcher

@@ -40,6 +40,8 @@ class PriorityQueue
 
     std::mutex _mutex;
     std::condition_variable _popBlocker;
+
+    std::atomic<bool> _shutdown = false;
 };
 
 }  // namespace dispatcher::queue

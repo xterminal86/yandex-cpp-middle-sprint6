@@ -9,13 +9,13 @@ namespace dispatcher::thread_pool {
 class ThreadPool
 {
   public:
-    ThreadPool(std::shared_ptr<PriorityQueue> q, size_t threadsNum);
+    ThreadPool(std::shared_ptr<PriorityQueue> queueRef, size_t threadsNum);
     ~ThreadPool();
 
   private:
     void Start();
 
-    std::shared_ptr<PriorityQueue> _queue;
+    std::shared_ptr<PriorityQueue> _queueRef;
     size_t _threadsNum;
 };
 

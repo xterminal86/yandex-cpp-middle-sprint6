@@ -43,17 +43,17 @@ PriorityQueue::PriorityQueue(const std::map<TaskPriority, QueueOptions>& config)
 
 std::optional<Action> PriorityQueue::pop()
 {
-  /*
   std::unique_lock lock(_mutex);
 
   _popBlocker.wait(
     lock,
     [this]()
     {
-      return (_shutdown.load() == true);
+      return (_shutdown.load() == true)
+          or (not _queueMap[TaskPriority::High].empty()
+           or not _queueMap[TaskPriority::Normal].empty());
     }
   );
-  */
 
   return std::nullopt;
 }
@@ -68,6 +68,7 @@ void PriorityQueue::push(TaskPriority priority, Action task)
 
 void PriorityQueue::shutdown()
 {
+  _shutdown = true;
 }
 
 } // namespace dispatcher::queue
