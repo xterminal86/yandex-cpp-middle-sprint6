@@ -6,24 +6,32 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+add_compile_options(-Wfatal-errors)
+add_compile_options(-Werror=return-type)
+#add_compile_options(-ggdb)
 
 find_package(GTest REQUIRED)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/src/queue
+  ${CMAKE_SOURCE_DIR}/src/thread_pool
 )
 
-# set(target dispatcher)
+set(target dispatcher)
 
-# add_executable(${target} main.cpp)
-# target_include_directories(${target} PUBLIC
-#     ${CMAKE_CURRENT_SOURCE_DIR}/include
-# )
+add_executable(${target} main.cpp)
+target_include_directories(
+  ${target}
+  PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 
-# target_link_libraries(${target} 
-#     PRIVATE
-#         task_dispatcher
-# )
+target_link_libraries(
+  ${target}
+  PRIVATE
+  task_dispatcher
+)
 
 include(CTest)
 enable_testing()
