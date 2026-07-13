@@ -15,7 +15,7 @@ class ThreadPool
     void stop();
 
   private:
-    void Start();
+    void start();
 
     std::shared_ptr<PriorityQueue> _queueRef;
     size_t _threadsNum;

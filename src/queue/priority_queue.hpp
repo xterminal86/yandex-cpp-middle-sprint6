@@ -24,7 +24,7 @@ class PriorityQueue
     explicit PriorityQueue(const std::map<TaskPriority, QueueOptions>& config);
     ~PriorityQueue() = default;
 
-    void push(TaskPriority priority, Action task);
+    void push(TaskPriority priority, const Action& task);
 
     // block on pop until shutdown is called
     // after that return std::nullopt on empty queue

@@ -12,7 +12,7 @@ class UnboundedQueue : public IQueue
   public:
     UnboundedQueue() = default;
 
-    void push(Action task) override;
+    void push(const Action& task) override;
 
     std::optional<Action> try_pop() override;
 

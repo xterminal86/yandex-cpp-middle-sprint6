@@ -80,7 +80,7 @@ std::optional<Action> PriorityQueue::pop()
 
 // =============================================================================
 
-void PriorityQueue::push(TaskPriority priority, Action task)
+void PriorityQueue::push(TaskPriority priority, const Action& task)
 {
   //Logger::Get().Log("  PriorityQueue::Push()");
   _queueMap[priority]->push(task);

@@ -8,7 +8,7 @@ BoundedQueue::BoundedQueue(size_t capacity)
 
 // =============================================================================
 
-void BoundedQueue::push(Action task)
+void BoundedQueue::push(const Action& task)
 {
   std::unique_lock lock(_mutex);
 

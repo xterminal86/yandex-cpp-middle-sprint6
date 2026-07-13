@@ -10,7 +10,7 @@ ThreadPool::ThreadPool(
 {
   _workers.reserve(threadsNum);
 
-  Start();
+  start();
 }
 
 // =============================================================================
@@ -36,7 +36,7 @@ ThreadPool::~ThreadPool()
 
 // =============================================================================
 
-void ThreadPool::Start()
+void ThreadPool::start()
 {
   for (size_t i = 0; i < _threadsNum; i++)
   {

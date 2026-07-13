@@ -26,7 +26,7 @@ TaskDispatcher::~TaskDispatcher()
 
 // =============================================================================
 
-bool TaskDispatcher::schedule(TaskPriority priority, Action task)
+bool TaskDispatcher::schedule(TaskPriority priority, const Action& task)
 {
   switch (priority)
   {

@@ -28,10 +28,13 @@ int main() {
             TaskPriority::Normal,
             [=]()
             {
-              const std::string msg = std::format(
-                "T {} - Normal no {}", std::this_thread::get_id(), (10 * i + j)
+              Logger::Get().Log(
+                std::format(
+                  "T {} - Normal no {}",
+                  std::this_thread::get_id(),
+                  (10 * i + j)
+                )
               );
-              Logger::Get().Log(msg);
               //Logger::Get().Log("Normal priority message №" + std::to_string(10 * i + j));
             }
           );
@@ -40,10 +43,13 @@ int main() {
             TaskPriority::High,
             [=]()
             {
-              const std::string msg = std::format(
-                "T {} - HIGH no {}", std::this_thread::get_id(), (10 * i + j)
+              Logger::Get().Log(
+                std::format(
+                  "T {} - HIGH no {}",
+                  std::this_thread::get_id(),
+                  (10 * i + j)
+                )
               );
-              Logger::Get().Log(msg);
               //Logger::Get().Log("High priority message №" + std::to_string(10 * i + j));
             }
           );

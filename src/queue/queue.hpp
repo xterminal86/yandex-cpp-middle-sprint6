@@ -17,7 +17,7 @@ class IQueue
 {
   public:
     virtual ~IQueue() = default;
-    virtual void push(Action task) = 0;
+    virtual void push(const Action& task) = 0;
     virtual std::optional<Action> try_pop() = 0;
 
     void stop()
